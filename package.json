@@ -1,0 +1,11 @@
+{
+  "name": "cloud-computing-hw-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  },
+  "keywords": [],
+  "author": "Ibragimov Timur <i.timur@mail.ru>",
+  "license": "ISC"
+}
