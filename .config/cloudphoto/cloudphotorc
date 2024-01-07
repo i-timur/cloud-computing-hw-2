@@ -1,0 +1,6 @@
+[DEFAULT]
+bucket=vvot17-albums
+aws_access_key_id=YCAJE8-L6ZQ7_TGiqKCsKkFb2
+aws_secret_access_key=YCP_1jQg_tjov8MoX_NSI1uUynFsiv5YxUpL-heL
+region=ru-central1
+endpoint_url=https://storage.yandexcloud.net
