@@ -47,3 +47,4 @@ terraform.rc
 *.vsix
 
 node_modules
+.idea
