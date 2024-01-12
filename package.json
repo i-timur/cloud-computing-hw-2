@@ -2,9 +2,14 @@
     "name": "cloud-computing-hw-2",
     "version": "0.1.0",
     "description": "",
-    "main": "index.ts",
+    "main": "dist/index.js",
+    "bin": {
+        "cloudphoto": "./dist/index.js"
+    },
     "scripts": {
-        "tsc": "tsc"
+        "tsc": "tsc",
+        "build": "npm run tsc",
+        "watch": "npm run tsc -- --watch"
     },
     "keywords": [],
     "author": "Ibragimov Timur <i.timur@mail.ru>",

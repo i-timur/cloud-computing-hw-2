@@ -1,8 +1,9 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import * as os from 'node:os';
 import {Config} from "../actions/init";
 
-export const configPath = '.config/cloudphoto';
+export const configPath = `${os.homedir()}/.config/cloudphoto`;
 
 const ini = require('ini');
 

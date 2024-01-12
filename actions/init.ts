@@ -1,7 +1,9 @@
-import * as fs from 'node:fs'
-import * as path from 'node:path'
-import {configPath} from '../utils/get-config';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import * as os from 'node:os';
+import {configPath, getConfig} from '../utils/get-config';
 import {CreateBucketCommand, ListBucketsCommand, S3Client} from '@aws-sdk/client-s3';
+import {getS3Client} from "../clients/s3-client";
 
 const ini = require('ini');
 
@@ -30,14 +32,7 @@ export async function init(config: Config) {
     configTemplate.DEFAULT = { ...config };
     fs.writeFileSync(path.join(configPath, 'cloudphotorc'), ini.stringify(configTemplate));
 
-    const client = new S3Client({
-        region: config.region,
-        credentials: {
-            accessKeyId: config.aws_access_key_id,
-            secretAccessKey: config.aws_secret_access_key,
-        },
-        endpoint: config.endpoint_url,
-    });
+    const client = getS3Client(getConfig());
 
     const commandList = new ListBucketsCommand({});
     const response = await client.send(commandList);
