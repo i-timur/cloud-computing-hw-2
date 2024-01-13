@@ -6,6 +6,7 @@ import * as path from 'node:path';
 import inquirer from 'inquirer';
 import {init} from './actions/init';
 import {File, upload} from './actions/upload';
+import {download} from "./actions/download";
 
 const program = new Command();
 
@@ -72,6 +73,22 @@ program.command('upload')
         }
 
         await upload(options.album, images);
+        console.log('Фотографии успешно загружены.');
+    });
+
+program.command('download')
+    .description('Загрузка фотографий из облачного хранилища.')
+    .option('--album <album>', 'Альбом, из которого будут загружены фотографии.')
+    .option('--path [path]', 'Путь к папке, в которую будут загружены фотографии.', '.')
+    .action(async options => {
+        const directory = path.resolve(process.cwd(), options.path);
+
+        const images = await download(options.album);
+
+        for (const image of images) {
+            fs.writeFileSync(path.join(directory, image.name), image.data);
+        }
+
         console.log('Фотографии успешно загружены.');
     });
 

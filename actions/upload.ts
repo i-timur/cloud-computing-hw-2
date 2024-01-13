@@ -4,7 +4,7 @@ import {getConfig} from "../utils/get-config";
 
 export interface File {
     name: string;
-    data: Buffer;
+    data: Uint8Array;
 }
 
 export async function upload(album: string, files: File[]) {
