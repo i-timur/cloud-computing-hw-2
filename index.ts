@@ -9,6 +9,7 @@ import {File, upload} from './actions/upload';
 import {download} from "./actions/download";
 import {list} from "./actions/list";
 import {deleteAlbum} from "./actions/delete";
+import {mksite} from "./actions/mksite";
 
 const program = new Command();
 
@@ -119,5 +120,8 @@ program.command('delete')
         await deleteAlbum(options.album, options.photo);
         console.log('Фотография(и) успешно удалена(ы).');
     });
+
+program.command('mksite')
+    .action(() => mksite());
 
 program.parse(process.argv);

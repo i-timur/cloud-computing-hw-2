@@ -1,3 +1,7 @@
+import * as fs from 'fs';
+import * as path from 'path';
+
+const templateAlbum = `
 <!doctype html>
 <html>
     <head>
@@ -5,16 +9,14 @@
         <style>
             .galleria{ width: 960px; height: 540px; background: #000 }
         </style>
+        <meta charset="utf-8">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/galleria.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/galleria/1.6.1/themes/classic/galleria.classic.min.js"></script>
     </head>
     <body>
         <div class="galleria">
-            <img src="URL_на_фотографию_1_в_альбоме" data-title="Имя_исходного_файла_фотографии_1">
-            <img src="URL_на_фотографию_2_в_альбоме" data-title="Имя_исходного_файла_фотографии_2">
-            <img src="..." data-title="...">
-            <img src="URL_на_фотографию_N_в_альбоме" data-title="Имя_исходного_файла_фотографии_N">
+            {INSERT_PHOTOS}
         </div>
         <p>Вернуться на <a href="index.html">главную страницу</a> фотоархива</p>
         <script>
@@ -24,3 +26,14 @@
         </script>
     </body>
 </html>
+`;
+
+export interface Photo {
+    url: string;
+    name: string;
+}
+
+export function generateAlbum(photos: Photo[]) {
+    const images = photos.map(photo => `<img src="${photo.url}" data-title="${photo.name}">`);
+    return templateAlbum.replace('{INSERT_PHOTOS}', images.join('\n'));
+}
