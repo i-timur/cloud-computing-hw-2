@@ -7,6 +7,8 @@ import inquirer from 'inquirer';
 import {init} from './actions/init';
 import {File, upload} from './actions/upload';
 import {download} from "./actions/download";
+import {list} from "./actions/list";
+import {deleteAlbum} from "./actions/delete";
 
 const program = new Command();
 
@@ -90,6 +92,32 @@ program.command('download')
         }
 
         console.log('Фотографии успешно загружены.');
+    });
+
+program.command('list')
+    .description('Вывод списка альбомов и фотографий в облачном хранилище.')
+    .option('--album [album]', 'Альбом, из которого будут загружены фотографии.')
+    .action(async options => {
+        const albums = await list(options.album);
+
+        if (Array.isArray(albums)) {
+            for (const album of albums) {
+                console.log(`Альбом: ${album.name}`);
+                album.files.forEach(file => console.log(`\t- ${file}`));
+            }
+        } else {
+            console.log(`Альбом: ${albums.name}`);
+            albums.files.forEach(file => console.log(`\t- ${file}`));
+        }
+    });
+
+program.command('delete')
+    .description('Удаление альбома или фотографии из облачного хранилища.')
+    .option('--album <album>', 'Альбом, из которого будут удалены фотография(и).')
+    .option('--photo [photo]', 'Фотография, которая будет удалена.', )
+    .action(async options => {
+        await deleteAlbum(options.album, options.photo);
+        console.log('Фотография(и) успешно удалена(ы).');
     });
 
 program.parse(process.argv);
